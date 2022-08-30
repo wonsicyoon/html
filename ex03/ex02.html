@@ -1,0 +1,135 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+        
+        <title>홍길동의 쇼핑몰</title>
+        <style>
+            *{margin: 0px; padding: 0px;}
+            body{width: 960px; margin: 0px auto;}
+            #bottom {
+                text-align: center;
+                border-top: 5px solid gray;
+                margin: 20px 0px;
+                padding: 20px 0px;
+            }
+            #best{
+                overflow: hidden;
+            }
+            #best .box{
+                width: 220px;
+                height: 280px;
+                float: left;
+                box-shadow: 10px 10px 10px gray;
+                margin: 8px;
+                text-align: center;
+                border-radius: 10px;
+            }
+            #info {
+                overflow: hidden;
+            }
+            #info #notice, #info #news {
+                width: 450px;
+                height: 450px;
+                float: left;
+                margin: 12px;
+            }
+            .row .title{
+                width: 300px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 20px;
+                color: gray;
+            }
+            #best span:hover{
+                color: green;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="top">
+            <img src="a.png" width="960" height="400">
+        </div>
+        <div id="middle">
+            <!-- 베스트 상품 -->
+            <div id="best"></div>
+            <script id="bestTemp" type="text/x-handlebars-template">
+                {{#each .}}
+                    <div class="box">
+                        <img src="{{image}}">
+                        <div class="title">{{title}}</div>
+                    </div>
+                {{/each}}
+            
+            </script>
+
+
+            <div id="info">
+                <!-- 공지사항 출력 -->
+                <table id="notice"></table>
+                <script id="noticeTemp" type="text/x-handlebars-template">
+                    {{#each .}}
+                        <tr class="row">
+                            <td>{{id}}</td>
+                            <td><div class="title">{{title}}</div></td>
+                        </tr>
+                    {{/each}}
+                </script>
+                <table id="news"></table>
+            </div>         
+        </div>
+        <div id="bottom">
+            <h3>Copyright 2022. 인천일보 아카데미 All rights reserved.</h3>
+        </div>       
+    </body>
+    <script>
+        //JSON 데이터
+        var bestData=[
+            {"image":"c.png", title:"에스프레소맛 쿠키"},
+            {"image":"d.png", title:"마들렌맛 쿠키"},
+            {"image":"b.png", title:"휘낭시에맛 쿠키"},
+            {"image":"e.png", title:"흑당맛 쿠키"},
+        ];
+        var bestTemp=Handlebars.compile($("#bestTemp").html());
+        $("#best").html(bestTemp(bestData));
+
+        //posts 데이터 불러오기
+        $.ajax({
+            type:"get",
+            url:"https://jsonplaceholder.typicode.com/posts",
+            dataType:"json",
+            success:function(data){
+                var rows=[];
+                
+                $(data).each(function(){
+                    if(this.id <= 10){
+                        var row = {"id":this.id, "title": this.title};
+                        rows.push(row);
+                    }
+                });
+                temp=Handlebars.compile($("#noticeTemp").html());
+                $("#notice").html(temp(rows));
+            }
+        })
+        //뉴스 데이터 생성하기
+        $.ajax({
+            type: "get",
+            url: "https://jsonplaceholder.typicode.com/albums",
+            dataType : "json",
+            success: function(data){
+                var rows=[];
+
+                $(data).each(function(){
+                    if(this.id <= 10){
+                        var row={"id":this.id, "title":this.title}
+                        rows.push(row);
+                    }
+                })
+                temp=Handlebars.compile($("#noticeTemp").html());
+                $("#news").html(temp(rows));
+            } 
+        })
+        
+    </script>
+</html>

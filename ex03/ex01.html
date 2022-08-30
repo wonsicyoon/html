@@ -1,0 +1,161 @@
+<html>
+    <head>
+        <title>한빛미디어</title>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+        <style>
+            * {
+                margin:0px; 
+                padding:0px;
+            }
+
+            body {
+                width:960px;
+                margin: 0px auto;
+            }
+
+            #top {
+            }
+
+            #middle {
+                margin-top: 20;
+                text-align: center;
+            }
+
+            #bottom {
+                text-align: center;
+                border-top: 3px solid gray;
+                margin-top: 30px;
+                padding-top: 20px;
+            }
+
+            #new, #best {
+                overflow: hidden;
+                margin: 20px;
+            }
+            
+            #list {
+                overflow: hidden;
+            }
+
+            #new .box, #best .box{
+                width:150px;
+                height: 200px;
+                float:left;
+                margin-top:10px;
+                margin-right:30px;
+                text-align: center;
+            }
+            #list .box {
+                width: 220;
+                height: 350px;
+                float:left;
+                margin-right:15.5px;
+                text-align: center;
+            }
+            .title{
+                font-weight: bold;
+                color: green;
+            }
+            #menu span{
+                font-size: 25px;
+                padding-right: 30px;
+            }
+
+            #menu span:hover{
+                color: green;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="top">
+            <img src="ex03/web_banner_111.jpg" width="960">
+        </div>
+        <div id="middle">
+            <div id="menu">
+                <span id="btnNew">새로나온 책</span>
+                <span id="btnBest">베스트 셀러</span>
+            </div>
+           <!-- 새로나온 책 -->
+           <div id="new"></div>
+           <script id="newTemp" type="text/x-handlebars-template">
+               {{#each .}}
+                   <div class="box">
+                       <img src="{{image}}" width="100">
+                       <div class="title">{{title}}</div>
+                   </div>
+                {{/each}}
+           </script>
+           <!-- 베스트 셀러 -->
+           <div id="best">
+               
+           </div>
+           <!-- 도서 목록 -->
+            <div id="list"></div>
+            <script id="listTemp" type="text/x-handlebars-template">
+                {{#each .}}
+                    <div class="box">
+                        <img src="{{image}}">
+                        <div class="title">{{title}}</div>
+                        <div class="price">{{price}}</div>
+                    </div>
+                {{/each}}
+            </script>
+        <div id="bottom">
+            <h3>Copyright 2022. 인천일보 아카데미 All rights Reserved.</h3>
+        </div>
+    </body>
+    <script>
+        $("#best").hide();
+        //새로나온 책을 클릭한 경우
+        $("#btnNew").on("click", function(){
+            $("#new").show();
+            $("#best").hide();
+            $(this).css("border-bottom", "5px solid green");
+            $("#btnBest").css("border", "none");
+        });
+
+        //베스트 셀러 클릭했을 때
+
+        $("#btnBest").on("click", function(){
+            $("#best").show();
+            $("#new").hide();
+            $(this).css("border-bottom", "5px solid green");
+            $("#btnNew").css("border", "none");
+        })
+        newData =[
+            {"image":"ex03/a.jpg" , "title":"자바정복"},
+            {"image":"ex03/b.jpg" , "title":"안드로이드정복"},
+            {"image":"ex03/c.jpg" , "title":"자바스트립트"},
+            {"image":"ex03/d.jpg" , "title":"HTML 5"},
+            {"image":"ex03/e.jpg" , "title":"CSS"},
+        ];
+
+        bestData = [
+            {"image":"ex03/a.jpg" , "title":"자바정복"},
+            {"image":"ex03/b.jpg" , "title":"안드로이드정복"},
+            {"image":"ex03/c.jpg" , "title":"자바스트립트"},
+            {"image":"ex03/a1.jpg" , "title":"HTML 5"},
+            {"image":"ex03/e.jpg" , "title":"CSS"},
+        ];
+
+        newTemp=Handlebars.compile($("#newTemp").html());
+        $("#new").html(newTemp(newData));
+        $("#best").html(newTemp(bestData));
+
+        listData = [
+            {"image":"ex03/a1.jpg" , "title":"거시 경제학","price":25000},
+            {"image":"ex03/a2.jpg" , "title":"트러스트","price":15000},
+            {"image":"ex03/a3.jpg" , "title":"우분투 리눅스","price":37000},
+            {"image":"ex03/a4.jpg" , "title":"경영학원론","price":19000},
+            {"image":"ex03/a.jpg" , "title":"데미안","price":38000},
+            {"image":"ex03/a.jpg" , "title":"데미안","price":25000},
+            {"image":"ex03/a.jpg" , "title":"데미안","price":25000},
+            {"image":"ex03/a.jpg" , "title":"데미안","price":25000},
+        ];
+
+        listTemp=Handlebars.compile($("#listTemp").html());
+        $("#list").html(listTemp(listData));
+    </script>
+</html>

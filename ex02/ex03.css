@@ -1,0 +1,41 @@
+#address .row:active{
+    background: blue
+}
+
+#address .row:hover{
+    background: gray
+}
+#address .title{
+    background: green;
+    text-align: center;
+}
+table{
+    width: 800px;
+    border-collapse: collapse;
+    margin: 0px auto;
+}
+td {
+    border: 1px solid gray;
+    padding: 10px;
+    font-size: 20px;
+    color: white;
+}
+.box{
+    background: yellow;
+    width: 200px;
+    height: 200px;
+    margin: 10px;
+    float: left;
+    border: 5px dotted black;
+    box-shadow: 10px 10px 10px gray;
+    font-size: 30px;
+    text-align: center;
+    }       
+#container, #address{
+    background: pink;
+    overflow: hidden;
+    width: 1200px;
+    padding: 50px;
+    margin: 0px auto;
+    margin-bottom: 20px;
+}
